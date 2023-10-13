@@ -1,8 +1,9 @@
-require('dotenv').config()
+const dotenv = require('dotenv')
 const express = require("express");
 const app = express();
+const cors = require('cors');
 const mongoose = require('mongoose')
-
+const authRouter = require('./routes/auth')
 
 //database
 const connectDB = async () => {
@@ -14,10 +15,16 @@ const connectDB = async () => {
   }
 };
 
+
 // middlewares
+dotenv.config()
+app.use(cors());
+app.use(express.json())
+app.use('/api/auth',authRouter)
 
-
-
+app.get('/',(req,res)=>{
+  res.send("Server is running")
+})
 // server running
 app.listen(process.env.PORT, () => {
     connectDB()
