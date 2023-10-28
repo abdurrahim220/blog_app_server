@@ -20,7 +20,7 @@ const connectDB = async () => {
 dotenv.config()
 app.use(cors());
 app.use(express.json())
-app.use('/api/auth',authRouter)
+app.use('/api',authRouter)
 
 app.get('/',(req,res)=>{
   res.send("Server is running")
