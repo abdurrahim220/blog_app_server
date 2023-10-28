@@ -2,8 +2,10 @@ const dotenv = require('dotenv')
 const express = require("express");
 const app = express();
 const cors = require('cors');
+// const errorHandler = require('./middleWare//errorHandler')
 const mongoose = require('mongoose')
 const authRouter = require('./routes/auth')
+const userRouter = require('./routes/users')
 
 //database
 const connectDB = async () => {
@@ -21,6 +23,8 @@ dotenv.config()
 app.use(cors());
 app.use(express.json())
 app.use('/api',authRouter)
+app.use('/api/users',userRouter)
+// app.use(errorHandler)
 
 app.get('/',(req,res)=>{
   res.send("Server is running")
