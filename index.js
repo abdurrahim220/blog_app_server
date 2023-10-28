@@ -6,6 +6,7 @@ const cors = require('cors');
 const mongoose = require('mongoose')
 const authRouter = require('./routes/auth')
 const userRouter = require('./routes/users')
+const postRouter = require('./routes/posts')
 
 //database
 const connectDB = async () => {
@@ -22,8 +23,11 @@ const connectDB = async () => {
 dotenv.config()
 app.use(cors());
 app.use(express.json())
+
+// routes
 app.use('/api',authRouter)
 app.use('/api/users',userRouter)
+app.use('/api/posts',postRouter)
 // app.use(errorHandler)
 
 app.get('/',(req,res)=>{

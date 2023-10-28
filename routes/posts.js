@@ -40,30 +40,30 @@ router
   .get("/:id", async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);
-      
+
       res.status(200).json(post);
-    } catch (error) {
-      res.status(500).json(error);
-    }
-  }).
-  .get("/:userId", async (req, res) => {
-    try {
-      const post = await Post.findById({userId:req.params.userId});
-      
-      res.status(200).json(post);
-    } catch (error) {
-      res.status(500).json(error);
-    }
-  }).
-  .get("/", async (req, res) => {
-    try {
-      const getPost = await Post.find();
-      
-      res.status(200).json(getPost);
     } catch (error) {
       res.status(500).json(error);
     }
   })
+  .get("/user/:userId", async (req, res) => {
+    try {
+      const post = await Post.find({ userId: req.params.userId });
+
+      res.status(200).json(post);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  })
+  .get("/", async (req, res) => {
+    try {
+      const getPost = await Post.find();
+
+      res.status(200).json(getPost);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  });
 
 // get user
 
