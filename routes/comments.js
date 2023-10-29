@@ -3,10 +3,11 @@ const router = express.Router();
 const User = require("../models/User");
 const Comment = require("../models/Comments");
 const bcrypt = require("bcrypt");
+const verifyToken = require('../middleWare/verifyToken');
 
 // update
 router
-  .post("/write", async (req, res) => {
+  .post("/write", verifyToken,async (req, res) => {
     try {
       const newComment = new Comment(req.body);
       const savedComment = await newComment.save();
@@ -15,7 +16,7 @@ router
       res.status(500).json(error);
     }
   })
-  .put("/:id", async (req, res) => {
+  .put("/:id", verifyToken,async (req, res) => {
     try {
       const updatedUser = await Comment.findByIdAndUpdate(
         req.params.id,
@@ -27,7 +28,7 @@ router
       res.status(500).json(error);
     }
   })
-  .delete("/:id", async (req, res) => {
+  .delete("/:id", verifyToken,async (req, res) => {
     try {
       await Comment.findByIdAndDelete(req.params.id);
 

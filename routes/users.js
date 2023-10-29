@@ -4,10 +4,11 @@ const User = require("../models/User");
 const Post = require("../models/Post");
 const Comment = require("../models/Comments");
 const bcrypt = require("bcrypt");
+const verifyToken = require('../middleWare/verifyToken');
 
 // update
 router
-  .put("/:id", async (req, res) => {
+  .put("/:id", verifyToken,async (req, res) => {
     try {
       if (req.body.password) {
         req.body.password = await bcrypt.hash(req.body.password, 11);
@@ -22,7 +23,7 @@ router
       res.status(500).json(error);
     }
   })
-  .delete("/:id", async (req, res) => {
+  .delete("/:id", verifyToken,async (req, res) => {
     try {
       await User.findByIdAndDelete(req.params.id);
       await Post.deleteMany({ userId: req.params.id });

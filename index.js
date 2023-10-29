@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 // const errorHandler = require('./middleWare//errorHandler')
 const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser')
 const authRouter = require('./routes/auth')
 const userRouter = require('./routes/users')
 const postRouter = require('./routes/posts')
@@ -23,6 +24,7 @@ const connectDB = async () => {
 // middlewares
 dotenv.config()
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json())
 
 // routes
