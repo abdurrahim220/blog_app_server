@@ -56,8 +56,12 @@ router
     }
   })
   .get("/", async (req, res) => {
+    const query = req.query;
     try {
-      const getPost = await Post.find();
+      const searchFilter = {
+        title: { $regex: query.search, $options: "i" },
+      };
+      const getPost = await Post.find(query.search ? searchFilter : null);
 
       res.status(200).json(getPost);
     } catch (error) {
@@ -65,6 +69,5 @@ router
     }
   });
 
-// get user
-
+//
 module.exports = router;
