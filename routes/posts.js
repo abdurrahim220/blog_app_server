@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User");
 const Post = require("../models/Post");
-const Comment = require("../models/Comments");
-const bcrypt = require("bcrypt");
+const Comment = require('../models/Comments')
 const verifyToken = require('../middleWare/verifyToken');
 
 // update
@@ -29,10 +27,10 @@ router
       res.status(500).json(error);
     }
   })
-  .delete("/:id",verifyToken, async (req, res) => {
+  .delete("/:id", async (req, res) => {
     try {
-      await Post.findByIdAndDelete(req.params.id);
-
+      await Post.findByIdAndDelete(req.params.id)
+      await Comment.deleteMany({postId:req.params.id})
       res.status(500).json("Post has been deleted!");
     } catch (error) {
       res.status(500).json(error);
