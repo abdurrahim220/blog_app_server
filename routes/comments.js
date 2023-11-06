@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User");
 const Comment = require("../models/Comments");
-const bcrypt = require("bcrypt");
 const verifyToken = require('../middleWare/verifyToken');
 
 // update
@@ -28,11 +26,15 @@ router
       res.status(500).json(error);
     }
   })
-  .delete("/:id", verifyToken,async (req, res) => {
+  .delete("/:id",verifyToken,async (req, res) => {
     try {
-      await Comment.findByIdAndDelete(req.params.id);
+      const deletedComment = await Comment.findByIdAndDelete(req.params.id);
 
-      res.status(500).json("Comment has been deleted!");
+      if (!deletedComment) {
+        return res.status(404).json("Comment not found");
+      }
+      res.status(200).json("Comment has been deleted");
+      
     } catch (error) {
       res.status(500).json(error);
     }
