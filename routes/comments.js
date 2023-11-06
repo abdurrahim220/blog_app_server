@@ -34,7 +34,6 @@ router
         return res.status(404).json("Comment not found");
       }
       res.status(200).json("Comment has been deleted");
-      
     } catch (error) {
       res.status(500).json(error);
     }
